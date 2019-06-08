@@ -60,8 +60,58 @@ router.get("/factors", async (req, res, next) => {
     let data = await Data.find();
     res.json(data);
   } catch (error) {
+    console.log(error);
     res.json({ message: "error" });
   }
 });
 
+router.post("/transaction", async (req, res, next) => {
+  try {
+    let new_owner;
+    let data_id = req.body.dataId;
+    var options = {
+      uri: "http://localhost:3000/api/Data",
+      headers: {
+        "User-Agent": "Request-Promise"
+      },
+      json: true
+    };
+    let response = await request(options);
+    for (var i = 0; i < response.length; i++) {
+      console.log(response[i].dataId);
+      if (response[i].dataId == data_id) {
+        let ll = response[i].owner.length;
+        if (response[i].owner[ll - 1] === "1") {
+          new_owner = "2";
+          console.log(new_owner);
+          break;
+        }
+        if (response[i].owner[ll - 1] === "2") {
+          new_owner = "1";
+          console.log(new_owner);
+          break;
+        }
+      }
+    }
+    // res.json("yo");
+    data_id = "resource:org.me.cto.Data#" + data_id;
+    new_owner = "resource:org.me.cto.User#" + new_owner;
+    var options_2 = {
+      method: "POST",
+      uri: "http://localhost:3000/api/TradeData",
+      body: {
+        $class: "org.me.cto.TradeData",
+        data: data_id,
+        newOwner: new_owner
+      },
+      json: true
+    };
+    let response_2 = await request(options_2);
+    console.log(response_2);
+    res.json(response_2);
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "error" });
+  }
+});
 module.exports = router;
