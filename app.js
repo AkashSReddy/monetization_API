@@ -24,9 +24,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 
-mongoose.connect("mongodb://localhost/monetization_api", {
-  useNewUrlParser: "true"
-});
+mongoose.connect(
+  "mongodb://localhost/monetization_api",
+  { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false },
+  err => {
+    if (!err) console.log("Connection successful");
+  }
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
