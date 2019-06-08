@@ -55,5 +55,13 @@ router.post("/newData", async (req, res, next) => {
   }
 });
 
-router.get("/factors", (req, res, next) => {});
+router.get("/factors", async (req, res, next) => {
+  try {
+    let data = await Data.find();
+    res.json(data);
+  } catch (error) {
+    res.json({ message: "error" });
+  }
+});
+
 module.exports = router;
