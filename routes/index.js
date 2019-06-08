@@ -108,7 +108,7 @@ router.post("/transaction", async (req, res, next) => {
     };
     let response_2 = await request(options_2);
     console.log(response_2);
-    res.json(response_2);
+    res.json({ message: true });
   } catch (error) {
     console.log(error);
     res.json({ message: "error" });
