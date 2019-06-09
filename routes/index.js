@@ -57,7 +57,7 @@ router.post("/newData", async (req, res, next) => {
 
 router.get("/factors", async (req, res, next) => {
   try {
-    let data = await Data.find();
+    let data = await Data.find({}, "type name group");
     res.json(data);
   } catch (error) {
     console.log(error);
