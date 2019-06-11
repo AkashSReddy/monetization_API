@@ -78,7 +78,7 @@ router.post("/transaction", async (req, res, next) => {
     };
     let response = await request(options);
     for (var i = 0; i < response.length; i++) {
-      console.log(response[i].dataId);
+      // console.log(response[i].dataId);
       if (response[i].dataId == data_id) {
         let ll = response[i].owner.length;
         if (response[i].owner[ll - 1] === "1") {
@@ -107,10 +107,10 @@ router.post("/transaction", async (req, res, next) => {
       json: true
     };
     let response_2 = await request(options_2);
-    console.log(response_2);
+    // console.log(response_2);
     res.json({ message: true });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.json({ message: "error" });
   }
 });
